@@ -20,7 +20,7 @@ new GoogleStrategy(
         refreshToken: string, 
         profile: any, 
         done:(error: any, user?:any) => void) => {
-    console.log(profile.id);
+    console.log(profile);
   }); 
 
 Google.get('/google', passport.authenticate('google', { scope: ['email'] }));

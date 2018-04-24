@@ -17,7 +17,7 @@ export const Strategy = new LocalStrategy(async (username, password, done) => {
 });
 
 
-Local.post('/local', passport.authenticate('local', { successRedirect: '../' }));
+Local.all('/local', passport.authenticate('local', { successRedirect: '../' }));
 
 export const Routes = Local;
 
