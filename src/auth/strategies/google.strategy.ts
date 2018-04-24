@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import * as passport from 'passport';
 // import * as PassportGoogle from 'passport-google-oauth';
-const pp = require('passport-google-oauth');
+const PassportGoogle = require('passport-google-oauth');
 
 const Google = Router();
 
-const GoogleStrategy = pp.OAuth2Strategy;
+const GoogleStrategy = PassportGoogle.OAuth2Strategy;
 const opts = {
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
