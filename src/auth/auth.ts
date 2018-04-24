@@ -4,6 +4,7 @@ import { IUser } from '../user/user.interface';
 import { Request, Response, NextFunction } from 'express';
 
 import { Strategy as LocalStrategy } from './strategies/local.strategy';
+import { Strategy as GoogleStrategy } from './strategies/google.strategy';
 
 
 
@@ -42,6 +43,7 @@ export function configure() {
    * local strategy
    */
   passport.use(LocalStrategy);
+  passport.use(GoogleStrategy);
 
 }
 
