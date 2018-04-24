@@ -13,7 +13,10 @@ import * as _             from 'lodash';
 import * as swaggerTools  from 'swagger-tools';
 import * as YAML          from 'yamljs';
 
-import * as userRouter from './user/user.route';
+import * as auth          from './auth/auth';
+import * as authRouter    from './auth/auth.route';
+
+import * as userRouter    from './user/user.route';
 import * as kartoffelRouter from './group/kartoffel/kartoffel.route';
 
 const app = express();
@@ -32,7 +35,12 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware: any) => {
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.config({ path: '.env' });
+// dotenv.config({ path: '.env' });
+
+/**
+ * configure passport strategies
+ */
+auth.configure();
 
 /**
  * Connect to MongoDB.
@@ -58,7 +66,18 @@ if (process.env.NODE_ENV !== 'test') {
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+}));
 
+/**
+ * authentication
+ */
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/auth', authRouter);
+
+app.use('/api', auth.isAuthenticated);
 app.use('/api/user', userRouter);
 app.use('/api/kartoffel', kartoffelRouter);
 
