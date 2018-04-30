@@ -42,6 +42,9 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware: any) => {
  */
 auth.configure();
 
+console.log(process.env.NODE_ENV);
+
+
 /**
  * Connect to MongoDB.
  */

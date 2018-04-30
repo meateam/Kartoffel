@@ -40,7 +40,7 @@ export function configure() {
   });
 
   /**
-   * local strategy
+   * use local strategy and google strategy
    */
   passport.use(LocalStrategy);
   passport.use(GoogleStrategy);
