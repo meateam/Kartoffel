@@ -21,6 +21,7 @@ new GoogleStrategy(
         profile: any, 
         done:(error: any, user?:any) => void) => {
     console.log(profile);
+    done(null, profile);
   }); 
 
 Google.get('/google', passport.authenticate('google', { scope: ['email'] }));
