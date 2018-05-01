@@ -20,8 +20,11 @@ new GoogleStrategy(
         refreshToken: string, 
         profile: any, 
         done:(error: any, user?:any) => void) => {
-    console.log(profile);
-    done(null, profile);
+    console.log(JSON.stringify(profile));
+    const normalizedUser = {
+      _id: profile.emails.pop().value,
+    };
+    done(null, normalizedUser);
   }); 
 
 Google.get('/google', passport.authenticate('google', { scope: ['email'] }));

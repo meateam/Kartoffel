@@ -7,25 +7,6 @@ import { Strategy as LocalStrategy } from './strategies/local.strategy';
 import { Strategy as GoogleStrategy } from './strategies/google.strategy';
 
 
-
-/**
- * OAuth Strategy
- */
-
-//  passport.use(new OAuth2Strategy({
-//     authorizationURL: "http://localhost:3000/api/oauth2/authorize",
-//     tokenURL: "http://localhost:3000/api/oauth2/token",
-//     clientID: process.env.CLIENT_ID,
-//     clientSecret: process.env.CLIENT_SECRET,
-//     callbackURL: "http://localhost:4000/auth/callback"
-//  }, (accessToken: any, refreshToken, profile, done) => {
-//     User.findOne({ authId: accessToken.userId}, (err, existingUser) => {
-//         if (err) return done(err);
-//         if (existingUser) return done(undefined, existingUser);
-//         const tempUser: any = createUser(accessToken.userId , accessToken.value, done);
-//     });
-//  }));
-
 export function configure() {
   /**
    * serialize & deserialize
@@ -35,7 +16,14 @@ export function configure() {
   });
   
   passport.deserializeUser(async (userId:string, done) => {
-    const user = await User.getUser(userId);
+    const user = {
+      _id: userId,
+      name: 'stam',
+    };
+    if (userId === 'eladex@gmail.com') {
+      user.name = 'rabbiran';
+    }
+    // const user = await User.getUser(userId);
     done(undefined, user);
   });
 

@@ -41,10 +41,6 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware: any) => {
  * configure passport strategies
  */
 auth.configure();
-
-console.log(process.env.NODE_ENV);
-
-
 /**
  * Connect to MongoDB.
  */
