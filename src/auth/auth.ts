@@ -43,5 +43,5 @@ export let isAuthenticated = (req: Request, res: Response, next: NextFunction) =
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/');
+  res.redirect(`/auth/${process.env.AUTH_STRATEGY}`);
 };
