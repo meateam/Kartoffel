@@ -1,12 +1,10 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import * as passport from 'passport';
 // import * as PassportLocal from 'passport-local';
 const PassportLocal = require('passport-local');
 import { User } from '../../user/user.controller';
 
 const LocalStrategy = PassportLocal.Strategy;
-const Local = Router();
-
 
 export const Strategy = new LocalStrategy(async (username: any, password:any, done:any) => {
   try {
@@ -18,7 +16,16 @@ export const Strategy = new LocalStrategy(async (username: any, password:any, do
 });
 
 
-Local.all('/local', passport.authenticate('local', { successRedirect: '../' }));
+// Local.all('/local', passport.authenticate('local', { successRedirect: '../' }));
 
-export const Routes = Local;
+
+export function getRouter(
+successHandler?:(req: Request, res: Response, next: NextFunction) => any) {
+  const Local = Router();  
+  Local.get('/local', passport.authenticate('local'), successHandler);
+  return Local;
+}
+   
+
+// export const Routes = Local;
 

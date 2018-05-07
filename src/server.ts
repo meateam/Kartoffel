@@ -40,7 +40,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware: any) => {
 /**
  * configure passport strategies
  */
-auth.configure();
+// auth.configure();
 /**
  * Connect to MongoDB.
  */
@@ -72,11 +72,14 @@ app.use(session({
 /**
  * authentication
  */
-app.use(passport.initialize());
-app.use(passport.session());
-app.use('/auth', authRouter);
+if (process.env.AUTH_STRATEGY) {
+  auth.configure();  
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use('/auth', authRouter);
+  app.use('/api', auth.isAuthenticated);
+}
 
-app.use('/api', auth.isAuthenticated);
 app.use('/api/user', userRouter);
 app.use('/api/kartoffel', kartoffelRouter);
 

@@ -1,9 +1,7 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import * as passport from 'passport';
 // import * as PassportGoogle from 'passport-google-oauth';
 const PassportGoogle = require('passport-google-oauth');
-
-const Google = Router();
 
 const GoogleStrategy = PassportGoogle.OAuth2Strategy;
 const opts = {
@@ -27,9 +25,17 @@ new GoogleStrategy(
     done(null, normalizedUser);
   }); 
 
-Google.get('/google', passport.authenticate('google', { scope: ['email'] }));
-Google.get('/google/callback', passport.authenticate('google', {}), (req, res) => {
-  res.redirect('/');
-});
+// Google.get('/google', passport.authenticate('google', { scope: ['email'] }));
+// Google.get('/google/callback', passport.authenticate('google', {}), (req, res) => {
+//   res.redirect('/');
+// });
 
-export const Routes = Google;
+export function getRouter(
+successHandler?:(req: Request, res: Response, next: NextFunction) => any) {
+  const Google = Router();
+  Google.get('/google', passport.authenticate('google', { scope: ['email'] }));
+  Google.get('/google/callback', passport.authenticate('google', {}), successHandler);
+  return Google;
+}
+
+// export const Routes = Google;
