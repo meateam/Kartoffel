@@ -19,7 +19,7 @@ pipeline {
             agent {
                 label 'kartoffel-prod'
             }
-            when { branch 'master' }
+            when { branch 'devops' }
             steps {
                 sh 'sudo service mongod start'
                 sh 'npm install pm2 -g'
