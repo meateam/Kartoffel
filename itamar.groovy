@@ -22,8 +22,10 @@ pipeline {
             when { branch 'master' }
             steps {
                 sh 'sudo service mongod start'
+                sh 'npm install pm2 -g'
                 sh 'npm install'
-                sh 'NODE_ENV=dev MONGODB_URI=mongodb://localhost:27017/kartoffel SESSION_SECRET=just_an_example npm start &'
+                sh 'npm run build'
+                sh 'NODE_ENV=dev MONGODB_URI=mongodb://localhost:27017/kartoffel SESSION_SECRET=just_an_example pm2 start dist/server.js --name kartoffel-server'
             }
         }    
     }
