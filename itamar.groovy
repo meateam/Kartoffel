@@ -7,7 +7,7 @@ pipeline {
                 label 'kartoffel-dev'
             }
             when {
-            not { branch 'master' }
+            not { branch 'devops' }
             }            
             steps {
                 sh 'sudo service mongod start'
